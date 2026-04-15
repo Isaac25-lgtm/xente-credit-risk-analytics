@@ -53,6 +53,7 @@ st.markdown(
         color: #627286;
         font-size: 1rem;
         margin-bottom: 0;
+        line-height: 1.55;
     }
     </style>
     """,
@@ -93,11 +94,20 @@ if page == "Home":
         f"""
         <div class="hero-card">
             <div class="hero-title">Xente Loan Default Prediction</div>
-            <p class="hero-subtitle">
-                Master’s-level business analytics project by <strong>{metadata['student_name']}</strong>
-                (<strong>{metadata['student_id']}</strong>) combining leakage-aware modelling,
-                premium visual storytelling, and Streamlit deployment.
-            </p>
+            <div class="hero-subtitle">
+                <strong>Uganda Christian University</strong><br>
+                Faculty of Engineering, Design and Technology<br>
+                Department of Computing and Technology<br>
+                EASTER 2026 SEMESTER EXAMINATION<br>
+                Programme: Master of Science in Data Science<br>
+                Year / Semester: 2 / 1<br>
+                Course Code: DSC8305<br>
+                Course Name: Business, Management and Financial Data Analytics<br>
+                Assessment: Project Based Exam<br>
+                Examination Date: April 2026<br>
+                <strong>Section B</strong><br><br>
+                Prepared by <strong>{metadata['student_name']}</strong> (<strong>{metadata['student_id']}</strong>)
+            </div>
         </div>
         """,
         unsafe_allow_html=True,
