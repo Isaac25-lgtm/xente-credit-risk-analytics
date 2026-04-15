@@ -4,6 +4,9 @@ import json
 from pathlib import Path
 from typing import Any
 
+import matplotlib
+matplotlib.use("Agg")
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -68,4 +71,3 @@ def save_figure(fig: plt.Figure, name: str) -> None:
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import joblib
 import numpy as np
@@ -19,22 +20,94 @@ PREDICTIONS_DIR = BASE_DIR / "outputs" / "predictions"
 REPORTS_DIR = BASE_DIR / "reports"
 
 
+class ResourceError(RuntimeError):
+    """Raised when the app cannot find or validate its required artifacts."""
+
+
+def _require_path(path: Path, label: str) -> Path:
+    if not path.exists():
+        raise ResourceError(
+            f"Missing required {label}: `{path.relative_to(BASE_DIR)}`. "
+            "Regenerate artifacts locally with `python -m src.run_pipeline` and commit the result before deployment."
+        )
+    return path
+
+
+def _read_csv(path: Path, label: str) -> pd.DataFrame:
+    try:
+        return pd.read_csv(path)
+    except Exception as exc:  # pragma: no cover - defensive error handling
+        raise ResourceError(f"Unable to read {label} from `{path.relative_to(BASE_DIR)}`.") from exc
+
+
+def _load_metadata(path: Path) -> dict[str, Any]:
+    try:
+        metadata = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:  # pragma: no cover - defensive error handling
+        raise ResourceError(f"Unable to parse model metadata at `{path.relative_to(BASE_DIR)}`.") from exc
+
+    required_keys = {"best_model", "threshold", "numeric_features", "categorical_features", "student_name", "student_id"}
+    missing_keys = sorted(required_keys.difference(metadata))
+    if missing_keys:
+        raise ResourceError(
+            "Model metadata is incomplete. Missing keys: " + ", ".join(missing_keys)
+        )
+    return metadata
+
+
+def required_artifacts() -> dict[str, Path]:
+    return {
+        "model artifact": MODELS_DIR / "final_model.joblib",
+        "model metadata": MODELS_DIR / "model_metadata.json",
+        "modelling dataset": CLEANED_DIR / "modelling_dataset.csv",
+        "dataset summary": METRICS_DIR / "dataset_summary.csv",
+        "variable summary": METRICS_DIR / "variable_summary.csv",
+        "missingness summary": METRICS_DIR / "missingness_summary.csv",
+        "feature selection summary": METRICS_DIR / "feature_selection_summary.csv",
+        "model comparison metrics": METRICS_DIR / "model_comparison_metrics.csv",
+        "leakage summary": METRICS_DIR / "leakage_and_id_exclusions.csv",
+        "test predictions": PREDICTIONS_DIR / "test_predictions.csv",
+        "final report": REPORTS_DIR / "final_report.md",
+    }
+
+
 def load_resources() -> dict[str, object]:
-    model = joblib.load(MODELS_DIR / "final_model.joblib")
-    metadata = json.loads((MODELS_DIR / "model_metadata.json").read_text(encoding="utf-8"))
-    modelling_df = pd.read_csv(CLEANED_DIR / "modelling_dataset.csv", parse_dates=["TransactionStartTime", "IssuedDateLoan"])
+    artifact_paths = {label: _require_path(path, label) for label, path in required_artifacts().items()}
+
+    try:
+        model = joblib.load(artifact_paths["model artifact"])
+    except Exception as exc:  # pragma: no cover - defensive error handling
+        raise ResourceError("Unable to load the saved model artifact.") from exc
+
+    metadata = _load_metadata(artifact_paths["model metadata"])
+    modelling_df = _read_csv(artifact_paths["modelling dataset"], "modelling dataset")
+    for date_column in ["TransactionStartTime", "IssuedDateLoan"]:
+        if date_column in modelling_df.columns:
+            modelling_df[date_column] = pd.to_datetime(modelling_df[date_column], errors="coerce")
+
+    expected_feature_columns = sorted(
+        set(metadata["numeric_features"]).union(metadata["categorical_features"])
+    )
+    missing_columns = [column for column in expected_feature_columns if column not in modelling_df.columns]
+    if missing_columns:
+        preview = ", ".join(missing_columns[:10])
+        raise ResourceError(
+            "The saved modelling dataset does not match the feature schema expected by the saved model. "
+            f"Missing columns: {preview}"
+        )
 
     resources = {
         "model": model,
         "metadata": metadata,
         "modelling_df": modelling_df,
-        "dataset_summary": pd.read_csv(METRICS_DIR / "dataset_summary.csv"),
-        "variable_summary": pd.read_csv(METRICS_DIR / "variable_summary.csv"),
-        "missingness": pd.read_csv(METRICS_DIR / "missingness_summary.csv"),
-        "feature_selection": pd.read_csv(METRICS_DIR / "feature_selection_summary.csv"),
-        "metrics": pd.read_csv(METRICS_DIR / "model_comparison_metrics.csv"),
-        "leakage": pd.read_csv(METRICS_DIR / "leakage_and_id_exclusions.csv"),
-        "predictions": pd.read_csv(PREDICTIONS_DIR / "test_predictions.csv"),
+        "dataset_summary": _read_csv(artifact_paths["dataset summary"], "dataset summary"),
+        "variable_summary": _read_csv(artifact_paths["variable summary"], "variable summary"),
+        "missingness": _read_csv(artifact_paths["missingness summary"], "missingness summary"),
+        "feature_selection": _read_csv(artifact_paths["feature selection summary"], "feature selection summary"),
+        "metrics": _read_csv(artifact_paths["model comparison metrics"], "model comparison metrics"),
+        "leakage": _read_csv(artifact_paths["leakage summary"], "leakage summary"),
+        "predictions": _read_csv(artifact_paths["test predictions"], "test predictions"),
+        "artifact_paths": artifact_paths,
     }
     return resources
 
@@ -111,4 +184,3 @@ def score_payload(resources: dict[str, object], payload: dict[str, object]) -> t
         risk_band = "High risk"
 
     return probability, prediction, risk_band
-

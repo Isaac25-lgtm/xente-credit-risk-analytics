@@ -1,12 +1,24 @@
 __pycache__/
+**/__pycache__/
 *.pyc
 *.pyo
 *.pyd
 .ipynb_checkpoints/
+.pytest_cache/
+
+.venv/
+venv/
+env/
+.env
+
+.DS_Store
+Thumbs.db
 
 outputs/streamlit_stdout.log
 outputs/streamlit_stderr.log
 outputs/streamlit.pid
+
+.streamlit/secrets.toml
 
 DSC8305  Business, Management and Financial Data Analytics (MSDS 21).pdf
 _DSC8305  Business, Management and Financial Data Analytics (MSDS 21).docx
@@ -18,4 +30,3 @@ TRAIN.csv
 TEST.csv
 unlinked_masked_final.csv
 VariableDefinitions.csv
-

@@ -4,7 +4,6 @@ from datetime import datetime
 from pathlib import Path
 import sys
 
-import pandas as pd
 import streamlit as st
 
 APP_DIR = Path(__file__).resolve().parent
@@ -14,9 +13,9 @@ for path_entry in [str(APP_DIR), str(BASE_DIR)]:
         sys.path.insert(0, path_entry)
 
 try:
-    from .utils import FIGURES_DIR, REPORTS_DIR, load_resources, score_payload
+    from .utils import FIGURES_DIR, REPORTS_DIR, ResourceError, load_resources, score_payload
 except ImportError:
-    from utils import FIGURES_DIR, REPORTS_DIR, load_resources, score_payload
+    from utils import FIGURES_DIR, REPORTS_DIR, ResourceError, load_resources, score_payload
 
 
 st.set_page_config(
@@ -66,8 +65,33 @@ def get_resources():
     return load_resources()
 
 
-resources = get_resources()
+try:
+    resources = get_resources()
+except ResourceError as exc:
+    st.title("Xente Loan Default App")
+    st.error(str(exc))
+    st.info(
+        "This app loads saved artifacts only. If you are running locally, place the required files in the repository, "
+        "run `python -m src.run_pipeline`, and retry. On Streamlit Community Cloud, confirm that the committed repo "
+        "contains the `models/`, `outputs/`, and `reports/` artifacts."
+    )
+    st.stop()
+except Exception as exc:  # pragma: no cover - defensive UI fallback
+    st.title("Xente Loan Default App")
+    st.error("The app could not start because an unexpected error occurred while loading its saved artifacts.")
+    with st.expander("Technical details"):
+        st.exception(exc)
+    st.stop()
+
 metadata = resources["metadata"]
+
+
+def render_figure(filename: str) -> None:
+    figure_path = FIGURES_DIR / filename
+    if figure_path.exists():
+        st.image(str(figure_path), width="stretch")
+    else:
+        st.warning(f"Figure not available: {filename}")
 
 with st.sidebar:
     st.markdown("## Xente Loan Default")
@@ -126,7 +150,7 @@ if page == "Home":
         "Predict which borrowers are likely to default so Xente can improve credit decision-making, "
         "reduce losses, and make lending more sustainable."
     )
-    st.image(str(FIGURES_DIR / "model_comparison_metrics.png"), width="stretch")
+    render_figure("model_comparison_metrics.png")
 
 elif page == "Data Overview":
     st.markdown("## Data Overview")
@@ -138,15 +162,15 @@ elif page == "Data Overview":
 
 elif page == "EDA Dashboard":
     st.markdown("## EDA Dashboard")
-    st.image(str(FIGURES_DIR / "target_distribution.png"), width="stretch")
-    st.image(str(FIGURES_DIR / "monthly_trends.png"), width="stretch")
+    render_figure("target_distribution.png")
+    render_figure("monthly_trends.png")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(str(FIGURES_DIR / "distribution_Amount.png"), width="stretch")
-        st.image(str(FIGURES_DIR / "categories_ProductCategory.png"), width="stretch")
+        render_figure("distribution_Amount.png")
+        render_figure("categories_ProductCategory.png")
     with col2:
-        st.image(str(FIGURES_DIR / "distribution_Value.png"), width="stretch")
-        st.image(str(FIGURES_DIR / "relationship_categorical_ProductCategory.png"), width="stretch")
+        render_figure("distribution_Value.png")
+        render_figure("relationship_categorical_ProductCategory.png")
 
 elif page == "Cleaning & Features":
     st.markdown("## Cleaning and Feature Engineering")
@@ -154,7 +178,7 @@ elif page == "Cleaning & Features":
     with col1:
         st.markdown("### Missingness Summary")
         st.dataframe(resources["missingness"].head(15), use_container_width=True)
-        st.image(str(FIGURES_DIR / "missingness_top_columns.png"), width="stretch")
+        render_figure("missingness_top_columns.png")
     with col2:
         st.markdown("### Leakage and Identifier Exclusions")
         st.dataframe(resources["leakage"], use_container_width=True)
@@ -170,15 +194,15 @@ elif page == "Model Performance":
     col2.metric("F1 Score", f"{best['f1']:.3f}")
     col3.metric("ROC-AUC", f"{best['roc_auc']:.3f}")
     st.dataframe(metrics, use_container_width=True)
-    st.image(str(FIGURES_DIR / "model_comparison_metrics.png"), width="stretch")
+    render_figure("model_comparison_metrics.png")
     col1, col2 = st.columns(2)
     with col1:
-        st.image(str(FIGURES_DIR / "roc_curve_comparison.png"), width="stretch")
-        st.image(str(FIGURES_DIR / "threshold_tradeoff.png"), width="stretch")
+        render_figure("roc_curve_comparison.png")
+        render_figure("threshold_tradeoff.png")
     with col2:
-        st.image(str(FIGURES_DIR / "confusion_matrix_logistic_regression.png"), width="stretch")
-        st.image(str(FIGURES_DIR / "confusion_matrix_random_forest.png"), width="stretch")
-    st.image(str(FIGURES_DIR / "best_model_feature_effects.png"), width="stretch")
+        render_figure("confusion_matrix_logistic_regression.png")
+        render_figure("confusion_matrix_random_forest.png")
+    render_figure("best_model_feature_effects.png")
 
 elif page == "Predict Default":
     st.markdown("## Predict Default")

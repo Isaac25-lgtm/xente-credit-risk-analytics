@@ -1,14 +1,13 @@
+streamlit
 pandas
 numpy
 scikit-learn
+scipy
 matplotlib
 seaborn
-scipy
 joblib
-streamlit
-plotly
 nbformat
 nbclient
 ipykernel
-openpyxl
+python-pptx
 

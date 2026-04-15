@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import matplotlib
+matplotlib.use("Agg")
+
 import joblib
 import numpy as np
 import pandas as pd
@@ -350,4 +353,3 @@ def refit_best_model(
     )
     predictions_df.to_csv(PREDICTIONS_DIR / "test_predictions.csv", index=False)
     return predictions_df
-
