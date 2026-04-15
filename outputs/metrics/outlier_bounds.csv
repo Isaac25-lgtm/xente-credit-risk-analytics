@@ -1,0 +1,38 @@
+feature,lower_bound,upper_bound,action
+Value,-15500.0,28500.0,IQR clip
+Amount,-28500.0,15500.0,IQR clip
+customer_prior_txn_count,-53.5,94.5,IQR clip
+customer_prior_abs_amount_sum,-419843.5,733072.5,IQR clip
+customer_prior_abs_value_sum,-428415.0,748525.0,IQR clip
+customer_prior_abs_amount_mean,-9250.0,21550.0,IQR clip
+customer_prior_abs_value_mean,-9864.684190010606,22616.892705787184,IQR clip
+customer_prior_max_abs_amount,-62500.0,117500.0,IQR clip
+customer_days_since_prev_txn,-2.522417534722222,4.204029224537036,IQR clip
+customer_tenure_days,-77.30117910879629,129.27693431712962,IQR clip
+customer_prior_unique_product_categories,-2.0,6.0,IQR clip
+customer_prior_unique_channels,-0.5,3.5,IQR clip
+customer_prior_same_product_count,-32.0,56.0,IQR clip
+customer_prior_same_channel_count,-14.0,26.0,IQR clip
+customer_prior_weekend_share,-0.3409090909090909,0.5681818181818181,IQR clip
+abs_amount,-15500.0,28500.0,IQR clip
+abs_value,-15500.0,28500.0,IQR clip
+amount_value_gap,0.0,0.0,IQR clip
+amount_to_value_ratio,1.0,1.0,IQR clip
+log_abs_amount,3.182769060340889,13.118730977605772,IQR clip
+log_abs_value,3.182769060340889,13.118730977605772,IQR clip
+txn_month,1.0,12.0,kept natural range
+txn_day,1.0,31.0,kept natural range
+txn_hour,0.0,23.0,kept natural range
+txn_weekday,0.0,6.0,kept natural range
+txn_is_weekend,0.0,1.0,kept natural range
+issue_month,1.0,12.0,kept natural range
+issue_day,1.0,31.0,kept natural range
+issue_hour,0.0,23.0,kept natural range
+issue_to_txn_minutes,-902.55,0.35,kept natural range
+log_customer_prior_abs_amount_sum,4.6629654975582655,17.384561290977725,IQR clip
+log_customer_prior_abs_value_sum,4.717092309800208,17.38598591604635,IQR clip
+log_customer_prior_abs_amount_mean,5.53708717462364,11.414452282388243,IQR clip
+log_customer_prior_abs_value_mean,5.490276177507844,11.510842223156232,IQR clip
+log_customer_prior_max_abs_amount,5.063785502231831,14.273405953397358,IQR clip
+log_customer_days_since_prev_txn,-1.479621759701015,2.4660362661683584,IQR clip
+log_customer_tenure_days,-5.566937903109995,9.686887943918688,IQR clip

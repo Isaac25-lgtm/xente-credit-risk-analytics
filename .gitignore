@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+outputs/streamlit_stdout.log
+outputs/streamlit_stderr.log
+outputs/streamlit.pid
+
+DSC8305  Business, Management and Financial Data Analytics (MSDS 21).pdf
+_DSC8305  Business, Management and Financial Data Analytics (MSDS 21).docx
+DSC8305_extracted.txt
+_DSC8305_extracted_paras.txt
+_DSC8305_media/
+
+TRAIN.csv
+TEST.csv
+unlinked_masked_final.csv
+VariableDefinitions.csv
+

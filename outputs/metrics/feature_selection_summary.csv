@@ -1,0 +1,46 @@
+feature,selected,missing_pct,unique_values,reason
+Amount,True,0.0,71,Selected as a numeric signal available at prediction time.
+InvestorId,True,0.0,3,Selected as a categorical signal available at prediction time.
+ProductCategory,True,0.0,7,Selected as a categorical signal available at prediction time.
+ProductId,True,0.0,15,Selected as a categorical signal available at prediction time.
+Value,True,0.0,87,Selected as a numeric signal available at prediction time.
+abs_amount,True,0.0,71,Selected as a numeric signal available at prediction time.
+abs_value,True,0.0,87,Selected as a numeric signal available at prediction time.
+amount_to_value_ratio,True,0.0,22,Selected as a numeric signal available at prediction time.
+amount_value_gap,True,0.0,28,Selected as a numeric signal available at prediction time.
+customer_days_since_prev_txn,True,10.62,977,Selected as a numeric signal available at prediction time.
+customer_prior_abs_amount_mean,True,10.62,945,Selected as a numeric signal available at prediction time.
+customer_prior_abs_amount_sum,True,0.0,877,Selected as a numeric signal available at prediction time.
+customer_prior_abs_value_mean,True,10.62,976,Selected as a numeric signal available at prediction time.
+customer_prior_abs_value_sum,True,0.0,941,Selected as a numeric signal available at prediction time.
+customer_prior_max_abs_amount,True,0.0,73,Selected as a numeric signal available at prediction time.
+customer_prior_same_channel_count,True,0.0,100,Selected as a numeric signal available at prediction time.
+customer_prior_same_product_count,True,0.0,139,Selected as a numeric signal available at prediction time.
+customer_prior_txn_count,True,0.0,176,Selected as a numeric signal available at prediction time.
+customer_prior_unique_channels,True,0.0,4,Selected as a numeric signal available at prediction time.
+customer_prior_unique_product_categories,True,0.0,7,Selected as a numeric signal available at prediction time.
+customer_prior_weekend_share,True,10.62,381,Selected as a numeric signal available at prediction time.
+customer_tenure_days,True,0.0,996,Selected as a numeric signal available at prediction time.
+issue_day,True,0.0,31,Selected as a numeric signal available at prediction time.
+issue_hour,True,0.0,24,Selected as a numeric signal available at prediction time.
+issue_month,True,0.0,6,Selected as a numeric signal available at prediction time.
+issue_to_txn_minutes,True,0.0,20,Selected as a numeric signal available at prediction time.
+log_abs_amount,True,0.0,71,Selected as a numeric signal available at prediction time.
+log_abs_value,True,0.0,87,Selected as a numeric signal available at prediction time.
+log_customer_days_since_prev_txn,True,10.62,977,Selected as a numeric signal available at prediction time.
+log_customer_prior_abs_amount_mean,True,10.62,945,Selected as a numeric signal available at prediction time.
+log_customer_prior_abs_amount_sum,True,0.0,877,Selected as a numeric signal available at prediction time.
+log_customer_prior_abs_value_mean,True,10.62,976,Selected as a numeric signal available at prediction time.
+log_customer_prior_abs_value_sum,True,0.0,941,Selected as a numeric signal available at prediction time.
+log_customer_prior_max_abs_amount,True,0.0,73,Selected as a numeric signal available at prediction time.
+log_customer_tenure_days,True,0.0,996,Selected as a numeric signal available at prediction time.
+txn_day,True,0.0,31,Selected as a numeric signal available at prediction time.
+txn_hour,True,0.0,24,Selected as a numeric signal available at prediction time.
+txn_is_weekend,True,0.0,2,Selected as a numeric signal available at prediction time.
+txn_month,True,0.0,6,Selected as a numeric signal available at prediction time.
+txn_weekday,True,0.0,7,Selected as a numeric signal available at prediction time.
+ChannelId,False,0.0,1,Dropped because the feature is constant.
+CountryCode,False,0.0,1,Dropped because the feature is constant.
+CurrencyCode,False,0.0,1,Dropped because the feature is constant.
+ProviderId,False,0.0,1,Dropped because the feature is constant.
+TransactionStatus,False,0.0,1,Dropped because the feature is constant.

@@ -1,0 +1,4 @@
+feature,chi_square_stat,chi_square_pvalue,degrees_of_freedom,highest_defaulting_category,highest_default_rate
+ProductCategory,741.1506328723798,7.947889211065024e-157,6,retail,0.6455696202531646
+ProductId,744.6623483996915,7.480070991495192e-150,14,ProductId_18,0.6455696202531646
+InvestorId,353.5500146589456,1.6888449455051593e-77,2,InvestorId_2,0.3743961352657005

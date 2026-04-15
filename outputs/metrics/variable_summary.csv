@@ -1,0 +1,28 @@
+variable,definition,type,missing_pct,unique_values,role
+Amount,Value of Transaction with charges,numeric,0.0,71,candidate predictor
+AmountLoan,Value of the loan issued,numeric,0.0,647,candidate predictor
+ChannelId,Identifies if customer used Xente Paylater on any other channel,categorical,0.0,1,candidate predictor
+CountryCode,Numerical geographical code of country,numeric,0.0,1,candidate predictor
+Currency,Ugandan shillings Denominations,categorical,0.0,1,candidate predictor
+CurrencyCode,Country currency,categorical,0.0,1,candidate predictor
+InvestorId,Loan issuer or network owner,categorical,0.0,3,candidate predictor
+ProductCategory,Type of product,categorical,0.0,7,candidate predictor
+ProductId,Item name being bought,categorical,0.0,15,candidate predictor
+ProviderId,Source provider of Item bought,categorical,0.0,1,candidate predictor
+TransactionStatus,"Loan application status (1=accepted, 0 = rejected)",numeric,0.0,1,candidate predictor
+Value,Value of transaction,numeric,0.0,87,candidate predictor
+BatchId,Identifier for bulk transactions being done on an account,categorical,0.0,1126,identifier
+CustomerId,Unique number identifying the customer on platform,categorical,0.0,239,identifier
+LoanApplicationId,unique identifier for loan application,categorical,0.34,1156,identifier
+LoanId,Loan transaction unique identifier,categorical,0.0,1159,identifier
+SubscriptionId,You can have one account with multiple subscriptions,categorical,0.0,5,identifier
+ThirdPartyId,Transaction id for a loan payback,categorical,0.13,1481,identifier
+TransactionId,Unique transaction identifier on platform,categorical,0.0,1153,identifier
+DueDate,Date loan is due,datetime,0.13,1155,leakage-prone
+IsFinalPayBack,Last payback installment,numeric,0.0,2,leakage-prone
+IsThirdPartyConfirmed,loan order succeeded on platform,numeric,0.0,2,leakage-prone
+PaidOnDate,Date on which the loan was paid,datetime,0.0,1484,leakage-prone
+PayBackId,Loan payback number identifier,categorical,0.0,1485,leakage-prone
+IsDefaulted,"Exceeded agreed payback time (1 = default, 0 = non-default)",numeric,0.0,2,target
+IssuedDateLoan,Date loan is issued,datetime,0.0,1159,time
+TransactionStartTime,Transaction start time,datetime,0.0,1153,time

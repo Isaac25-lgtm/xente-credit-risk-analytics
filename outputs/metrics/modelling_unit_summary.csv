@@ -1,0 +1,8 @@
+check,value
+Known-target rows,1488
+Distinct customers,239
+Distinct transactions,1153
+Distinct loans,1159
+Loans appearing on multiple rows,150
+Customers appearing multiple times,177
+Repeated transaction ids,335

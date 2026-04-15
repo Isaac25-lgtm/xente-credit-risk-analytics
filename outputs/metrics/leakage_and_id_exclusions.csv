@@ -1,0 +1,15 @@
+feature,decision,reason
+PaidOnDate,Excluded,This variable is only known after repayment events or directly reflects post-outcome behaviour.
+IsFinalPayBack,Excluded,This variable is only known after repayment events or directly reflects post-outcome behaviour.
+DueDate,Excluded,This variable is only known after repayment events or directly reflects post-outcome behaviour.
+PayBackId,Excluded,This variable is only known after repayment events or directly reflects post-outcome behaviour.
+IsThirdPartyConfirmed,Excluded,This variable is only known after repayment events or directly reflects post-outcome behaviour.
+CustomerId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+TransactionId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+BatchId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+SubscriptionId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+LoanId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+LoanApplicationId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+ThirdPartyId,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+row_id,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
+source_dataset,Excluded,Dropped as a raw identifier because it labels records rather than describing borrower risk behaviour.
